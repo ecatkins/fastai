@@ -773,6 +773,7 @@ class MixedItem(ItemBase):
         self.data = [item.data for item in self.obj]
         return self
 
+
 class MixedItemList(ItemList):
 
     def __init__(self, item_lists, path:PathOrStr=None, label_cls:Callable=None, inner_df:Any=None,
@@ -795,6 +796,15 @@ class MixedItemList(ItemList):
 
     def get(self, i):
         return MixedItem([il.get(i) for il in self.item_lists])
+
+    def reconstruct(self, l):
+        return [il.reconstruct(i) for il, i in zip(self.item_lists, l)]
+
+    def show_xys(self, xs, ys):
+        DISPLAY_INDEX = 0
+        il = self.item_lists[DISPLAY_INDEX]
+        return il.show_xys([i[DISPLAY_INDEX] for i in xs], ys)
+
 
     def __getitem__(self,idxs:int)->Any:
         idxs = try_int(idxs)
