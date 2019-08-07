@@ -324,7 +324,7 @@ Tensor.ndim = property(lambda x: len(x.shape))
 
 def grab_idx(x,i,batch_first:bool=True):
     "Grab the `i`-th batch in `x`, `batch_first` stating the batch dimension."
-    if batch_first: return ([o[i].cpu() for o in x]   if is_listy(x) else x[i].cpu())
+    if batch_first: return ([[a[i].cpu() for a in o] if is_listy(o) else o[i].cpu() for o in x]  if is_listy(x) else x[i].cpu())
     else:           return ([o[:,i].cpu() for o in x] if is_listy(x) else x[:,i].cpu())
 
 def logit(x:Tensor)->Tensor:

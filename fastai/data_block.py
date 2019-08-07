@@ -777,9 +777,9 @@ class MixedItem(ItemBase):
 class MixedItemList(ItemList):
 
     def __init__(self, item_lists, path:PathOrStr=None, label_cls:Callable=None, inner_df:Any=None,
-                 x:'ItemList'=None, ignore_empty:bool=False, processor=None, display_index=0):
+                 x:'ItemList'=None, ignore_empty:bool=False, processor=None):
         self.item_lists = item_lists
-        self.display_index=1
+        self.display_index = 0
         if processor is None:
             default_procs = [[p(ds=il) for p in listify(il._processor)] for il in item_lists]
             processor = MixedProcessor([ifnone(il.processor, dp) for il,dp in zip(item_lists, default_procs)])
